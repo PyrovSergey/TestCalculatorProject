@@ -1,7 +1,10 @@
 package com.example.pyrov.calculator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 if (expression.endsWith(".")) {
                     break;
                 } else {
-                    computationLine.setText(expression + ",");
+                    computationLine.setText(expression + ".");
                 }
                 break;
             case R.id.button_eight:
@@ -201,5 +204,23 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return "Invalid Expression";
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.open_history) {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
