@@ -9,13 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pyrov.calculator.data.DataStorage;
+import com.example.pyrov.calculator.model.Expression;
 import com.example.pyrov.calculator.model.ExtendedDoubleEvaluator;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String DATE_PATTERN = "dd MMMM yyyy HH:mm";
 
     @BindView(R.id.computation_line)
     TextView computationLine;
@@ -57,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
     Button buttonEquals;
 
     private String expression;
+    private DataStorage dataStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        dataStorage = App.getComponent().getDataStorage();
 
         buttonDelete.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -184,7 +193,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.button_equals:
-                computationLine.setText(getResult(expression));
+                String tmpResult = getResult(expression);
+                dataStorage.insertExpression(new Expression(getStringDate(new Date()), computationLine.getText().toString() + " = " + tmpResult));
+                computationLine.setText(tmpResult);
                 expression = "";
                 resultOutput.setText(expression);
                 break;
@@ -220,7 +231,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        return true;
+    }
 
-        return super.onOptionsItemSelected(item);
+    private String getStringDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN, Locale.getDefault());
+        return dateFormat.format(date);
     }
 }

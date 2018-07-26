@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Calculator</string>
     <string name="history">History</string>
+    <string name="clear_history">clear</string>
 </resources>

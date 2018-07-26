@@ -22,6 +22,7 @@ public final class DataStorage {
     }
 
     public List<Expression> getExpressionsList() {
+        expressionsList.clear();
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         String[] projection = {
                 ExpressionEntry._ID,
