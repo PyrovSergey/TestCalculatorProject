@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fathzer.soft.javaluator.DoubleEvaluator;
+import com.example.pyrov.calculator.model.ExtendedDoubleEvaluator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 if (expression.endsWith(".")) {
                     break;
                 } else {
-                    computationLine.setText(expression + ".");
+                    computationLine.setText(expression + ",");
                 }
                 break;
             case R.id.button_eight:
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
     private String getResult(String expression) {
         Double result;
         try {
-            result = new DoubleEvaluator().evaluate(expression);
+            result = new ExtendedDoubleEvaluator().evaluate(expression);
             if ((result % 1) == 0) {
                 return String.valueOf(Math.round(result));
             } else {
